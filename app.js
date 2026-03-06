@@ -1,4 +1,5 @@
 require('dotenv').config();
+console.log("MONGO_URI:", process.env.MONGO_URI);
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
