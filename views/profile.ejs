@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet" href="/stylesheets/profile.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <style>
+    .upload-form {
+      display: none;
+      margin-top: 16px;
+      background: white;
+      padding: 20px 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .upload-form input[type="text"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+    .upload-form input[type="text"]:focus {
+      outline: none;
+      border-color: #1da1f2;
+    }
+    .upload-form input[type="file"] {
+      width: 100%;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+    .upload-form button {
+      background: #e60023;
+      color: white;
+      padding: 10px 24px;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+    }
+    .add-post-btn {
+      background: #1da1f2;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="logo">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png" 
+       alt="Pinterest" style="height: 30px; width: auto; vertical-align: middle;">
+  Pinterest
+</a>
+    <div class="nav-links">
+      <a href="/feed" class="nav-link"><i class="bi bi-house-fill"></i> Feed</a>
+      <a href="/profile" class="nav-link"><i class="bi bi-person-fill"></i> Profile</a>
+      <a href="/posts" class="nav-link"><i class="bi bi-grid-fill"></i> Posts</a>
+      <a href="/logout" class="btn-logout"><i class="bi bi-box-arrow-right"></i> Logout</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="profile">
+
+      <!-- Avatar -->
+      <div class="avatar-wrapper" onclick="document.getElementById('dpInput').click()" style="cursor:pointer; position:relative; display:inline-block;">
+        <img src="<%= user.dp ? '/images/uploads/' + user.dp : 'https://i.postimg.cc/GpJd6R8x/Profile-Pic.jpg' %>"
+             alt="Profile Picture" class="avatar">
+        <div style="position:absolute; bottom:6px; right:6px; background:#e60023; color:white; border-radius:50%; width:28px; height:28px; display:flex; align-items:center; justify-content:center; font-size:14px; box-shadow:0 2px 6px rgba(0,0,0,0.3);">
+          <i class="bi bi-camera-fill"></i>
+        </div>
+      </div>
+
+      <!-- Hidden dp form -->
+      <form id="dpForm" action="/update-dp" method="POST" enctype="multipart/form-data">
+        <input type="file" id="dpInput" name="dp" accept="image/*" style="display:none"
+          onchange="document.getElementById('dpForm').submit()">
+      </form>
+
+      <p>Hello. Hola. Namaste</p>
+      <h1>I <span class="heighlight">am</span> <%= user.fullname %></h1>
+      <p>I am a full Stack developer <br> who loves tech.</p>
+
+      <div class="icons">
+        <a href=""><i class="bi bi-github"></i></a>
+        <a href=""><i class="bi bi-twitter"></i></a>
+        <a href=""><i class="bi bi-linkedin"></i></a>
+        <a href="/logout" class="button"><i class="bi bi-box-arrow-right"></i> Logout</a>
+        <button class="add-post-btn" onclick="toggleForm()">
+          <i class="bi bi-plus-circle-fill"></i> Add New Post
+        </button>
+      </div>
+
+      <!-- Upload form (hidden by default) -->
+      <div class="upload-form" id="uploadForm">
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+          <input type="text" name="filecaption" placeholder="Write a caption...">
+          <input type="file" name="file" accept="image/*">
+          <button type="submit"><i class="bi bi-upload"></i> Upload</button>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    function toggleForm() {
+      const form = document.getElementById('uploadForm');
+      form.style.display = form.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+
+</body>
+</html>

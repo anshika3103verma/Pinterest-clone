@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;800&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
+:root{
+  --blue: #1cb4da;
+}
+
+body{
+  font-family: 'Poppins', sans-serif;
+  color: rgb(45, 45,45);
+  background: rgb(30, 200, 197);
+  font-size: 1.2rem;
+  background: linear-gradient(
+    90deg,
+    rgba(30, 200, 197, 1) 0%,
+    rgba(250, 250, 138, 1) 100%
+  );
+}
+
+.container{
+  background-color: rgba(255, 255,255, 0.5);
+  border-radius: 20px;
+  padding: 5px; 
+  margin-top: 1rem;
+  margin-bottom: 5rem;
+}
+
+.flex{
+  display: flex;
+ flex-wrap: wrap;
+ gap: 20px;
+}
+
+.profile{
+  text-align: center;
+  padding-top: 15px;
+}
+.profile h1{
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 0;
+}
+.avatar{
+  height: 150px;
+  width: 150px;
+  border:3px solid rgba(255, 255,255, 0.5);
+  border-radius: 50%;
+
+}
+.heighlight{
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 2.5px;
+  -webkit-text-stroke-color: rgb(45, 45,45);
+}
+.icons a{
+  font-size: 28px;
+  margin-right:8px; 
+}
+.icons a:hover{
+  font-size: 28px;
+  margin-right:8px; 
+  color: var(--blue);
+  background-color: transparent;
+  padding:0;
+  border: none;
+}
+/* Rectangular logout button */
+.icons .button {
+  margin-top: 16px;
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #e60023; /* Pinterest red */
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 4px; /* rectangle, slightly sharp */
+}
+
+/* Disable hover styling completely */
+.icons .button:hover {
+  background-color: #e60023;
+  opacity: 1;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);  /* 3 columns like Pinterest */
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.card {
+  width: 100% !important;   /* overrides the inline width:18rem */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.post-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;    /* crops neatly without stretching */
+  display: block;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: white !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #e60023;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  transition: background 0.2s;
+}
+
+.nav-link:hover {
+  background: #f0f0f0;
+  color: #e60023;
+}
+
+.btn-logout {
+  background: #e60023;
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.btn-logout:hover {
+  background: #c0001e;
+}
+
+.button:hover {
+  background: #1da1f2 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.icons .button:hover {
+  background-color: #e60023 !important;
+  opacity: 1 !important;
+  transform: none !important;
+  box-shadow: none !important;
+  cursor: pointer;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  padding: 10px 20px !important;
+}
