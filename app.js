@@ -1,5 +1,4 @@
-require('dotenv').config();
-console.log("MONGO_URI:", process.env.MONGO_URI);
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -26,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressSession({
   resave: false,
   saveUninitialized: false,
-  secret: process.env.SESSION_SECRET
+  secret: 'hey hey'
 }));
 
 app.use(flash());

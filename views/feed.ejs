@@ -21,9 +21,7 @@
             outline: none;
             border-right: none;
         }
-        .search-bar input:focus {
-            border-color: #e60023;
-        }
+        .search-bar input:focus { border-color: #e60023; }
         .search-bar button {
             padding: 12px 20px;
             background: #e60023;
@@ -50,16 +48,16 @@
 <body>
     <nav class="navbar">
       <a href="/" class="logo">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png" 
-       alt="Pinterest" style="height: 30px; width: auto; vertical-align: middle;">
-  Pinterest
-</a>
-        <div class="nav-links">
-            <a href="/feed" class="nav-link"><i class="bi bi-house-fill"></i> Feed</a>
-            <a href="/profile" class="nav-link"><i class="bi bi-person-fill"></i> Profile</a>
-            <a href="/posts" class="nav-link"><i class="bi bi-grid-fill"></i> Posts</a>
-            <a href="/logout" class="btn-logout"><i class="bi bi-box-arrow-right"></i> Logout</a>
-        </div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png" 
+             alt="Pinterest" style="height: 30px; width: auto; vertical-align: middle;">
+        Pinterest
+      </a>
+      <div class="nav-links">
+          <a href="/feed" class="nav-link"><i class="bi bi-house-fill"></i> Feed</a>
+          <a href="/profile" class="nav-link"><i class="bi bi-person-fill"></i> Profile</a>
+          <a href="/posts" class="nav-link"><i class="bi bi-grid-fill"></i> Posts</a>
+          <a href="/logout" class="btn-logout"><i class="bi bi-box-arrow-right"></i> Logout</a>
+      </div>
     </nav>
 
     <!-- Search Bar -->
@@ -80,28 +78,43 @@
     <% } %>
 
     <div class="container">
-        <% posts.forEach(function(post) { %>
-    <div class="box">
-      <img src="/images/uploads/<%= post.image %>" alt="<%= post.imageText %>">
-      <div class="caption">
-        <p><%= post.imageText %></p>
-        <small>by <strong><%= post.user ? post.user.username : 'Unknown' %></strong></small>
-      </div>
-    </div>
-  <% }) %>
 
-  <!-- Unsplash posts -->
-  <% unsplashPosts.forEach(function(photo) { %>
-          <div class="box" onclick="window.open('<%= photo.urls.full %>', '_blank')" style="cursor:pointer;">
-            <img src="<%= photo.urls.small %>" alt="<%= photo.alt_description %>">
-            <div class="caption">
-              <p><%= photo.alt_description || 'Beautiful photo' %></p>
-              <small>by <strong><%= photo.user.name %></strong> on Unsplash</small>
+        <!-- Your uploaded posts -->
+        <% if (typeof posts !== 'undefined' && posts && posts.length > 0) { %>
+            <% posts.forEach(function(post) { %>
+                <div class="box">
+                    <img src="/images/uploads/<%= post.image %>" alt="<%= post.imageText %>">
+                    <div class="caption">
+                        <p><%= post.imageText %></p>
+                        <small>by <strong><%= post.user ? post.user.username : 'Unknown' %></strong></small>
+                    </div>
+                </div>
+            <% }) %>
+        <% } %>
+
+        <!-- Unsplash posts -->
+        <% if (typeof unsplashPosts !== 'undefined' && unsplashPosts && unsplashPosts.length > 0) { %>
+            <% unsplashPosts.forEach(function(photo) { %>
+                <% if (photo && photo.urls && photo.user) { %>
+                    <div class="box" onclick="window.open('<%= photo.urls.full %>', '_blank')" style="cursor:pointer;">
+                        <img src="<%= photo.urls.small %>" alt="<%= photo.alt_description || 'photo' %>">
+                        <div class="caption">
+                            <p><%= photo.alt_description || 'Beautiful photo' %></p>
+                            <small>by <strong><%= photo.user.name %></strong> on Unsplash</small>
+                        </div>
+                    </div>
+                <% } %>
+            <% }) %>
+        <% } %>
+
+        <!-- No results -->
+        <% if ((typeof posts === 'undefined' || !posts || posts.length === 0) && (typeof unsplashPosts === 'undefined' || !unsplashPosts || unsplashPosts.length === 0)) { %>
+            <div class="no-results">
+                <i class="bi bi-image" style="font-size:48px; color:#ddd;"></i>
+                <p>No posts found. <a href="/feed">Go back to feed</a></p>
             </div>
-          </div>
-  <% }) %>
-    </div>
-    
+        <% } %>
 
+    </div>
 </body>
 </html>

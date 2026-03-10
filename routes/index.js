@@ -6,9 +6,9 @@ const bcrypt = require('bcrypt');
 const upload = require("./multer");
 const fetch = require("node-fetch");
 
-
-router.get('/', function(req, res) {
-   res.render('index',{nav:false});
+router.get('/', (req, res) => {
+  if (req.session.userId) return res.redirect('/feed');
+  res.render('index');
 });
 
 router.get('/login', function(req, res) {
@@ -41,6 +41,11 @@ router.get('/feed', isLoggedIn, async function(req, res, next) {
   } catch(err) {
     next(err);
   }
+});
+
+// Explore → same as feed
+router.get('/explore', isLoggedIn, async function(req, res, next) {
+  res.redirect('/feed');
 });
 
 router.get('/search', isLoggedIn, async function(req, res) {

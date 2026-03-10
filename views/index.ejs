@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pinterest – Discover ideas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red: #E60023; --red-dark: #ad081b; --pink: #c21975;
+      --black: #111111; --gray: #767676; --light: #f0f0f0;
+      --nav-h: 64px;
+    }
+    body { font-family: 'Poppins', sans-serif; background: #fff; color: var(--black); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+      background: #fff; display: flex; align-items: center;
+      padding: 0 24px; gap: 16px; z-index: 200; border-bottom: 1px solid #e8e8e8;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 8px; text-decoration: none; flex-shrink: 0; }
+    .nav-brand-icon { width: 34px; height: 34px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .nav-brand-icon svg { width: 20px; height: 20px; fill: #fff; }
+    .nav-brand-text { font-size: 20px; font-weight: 800; color: var(--red); }
+    .nav-explore { font-size: 15px; font-weight: 600; color: var(--black); text-decoration: none; padding: 8px 12px; border-radius: 24px; transition: background .2s; white-space: nowrap; }
+    .nav-explore:hover { background: var(--light); }
+    .nav-search { flex: 1; max-width: 560px; position: relative; }
+    .nav-search input {
+      width: 100%; padding: 13px 20px 13px 46px; border-radius: 32px;
+      border: none; background: var(--light); font-size: 15px;
+      font-family: 'Poppins', sans-serif; color: #555; outline: none; cursor: pointer;
+    }
+    .nav-search input:focus { background: #e8e8e8; }
+    .nav-search i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #666; font-size: 15px; pointer-events: none; }
+    .nav-right { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-shrink: 0; }
+    .nav-link { font-size: 15px; font-weight: 600; color: var(--black); text-decoration: none; padding: 8px 14px; border-radius: 8px; transition: background .2s; white-space: nowrap; }
+    .nav-link:hover { background: var(--light); }
+    .btn-login { background: var(--red); color: #fff; border-radius: 32px; padding: 12px 22px; font-size: 15px; font-weight: 700; text-decoration: none; display: inline-block; transition: background .2s, transform .15s; white-space: nowrap; }
+    .btn-login:hover { background: var(--red-dark); transform: scale(1.03); }
+    .btn-signup { background: var(--light); color: var(--black); border-radius: 32px; padding: 12px 22px; font-size: 15px; font-weight: 700; text-decoration: none; display: inline-block; transition: background .2s, transform .15s; white-space: nowrap; }
+    .btn-signup:hover { background: #e0e0e0; transform: scale(1.03); }
+
+    /* HERO */
+    .hero { min-height: 100vh; padding-top: var(--nav-h); display: flex; align-items: center; position: relative; overflow: hidden; }
+    .hero-left { flex: 0 0 52%; padding: 80px 60px 80px 80px; position: relative; z-index: 2; }
+    .hero-tagline { font-size: clamp(42px,5vw,64px); font-weight: 900; line-height: 1.1; letter-spacing: -1.5px; color: var(--black); margin-bottom: 4px; }
+    .hero-tagline-colored { font-size: clamp(42px,5vw,64px); font-weight: 900; line-height: 1.1; letter-spacing: -1.5px; color: var(--pink); display: block; min-height: 1.2em; border-right: 3px solid var(--pink); padding-right: 4px; }
+    .hero-dots { display: flex; gap: 8px; margin-top: 28px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: #ccc; cursor: pointer; transition: background .3s; }
+    .dot.active { background: var(--pink); }
+    .hero-cta { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
+    .cta-red { background: var(--red); color: #fff; border-radius: 32px; padding: 14px 32px; font-size: 16px; font-weight: 700; font-family: 'Poppins', sans-serif; text-decoration: none; display: inline-block; transition: background .2s, transform .15s; }
+    .cta-red:hover { background: var(--red-dark); transform: scale(1.03); }
+    .cta-dark { background: var(--black); color: #fff; border-radius: 32px; padding: 14px 32px; font-size: 16px; font-weight: 700; font-family: 'Poppins', sans-serif; text-decoration: none; display: inline-block; transition: background .2s, transform .15s; }
+    .cta-dark:hover { background: #333; transform: scale(1.03); }
+
+    /* HERO RIGHT */
+    .hero-right { flex: 0 0 48%; position: relative; height: 600px; display: flex; align-items: center; justify-content: center; }
+    .pin-stack { position: relative; width: 340px; height: 520px; }
+    .pin-badge { position: absolute; top: -20px; right: 20px; width: 80px; height: 80px; background: #9b59b6; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; box-shadow: 0 8px 24px rgba(155,89,182,0.4); animation: float 3s ease-in-out infinite; }
+    .pin-badge svg { width: 38px; height: 38px; fill: #fff; }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .card-main { position: absolute; left: 0; top: 40px; width: 230px; height: 420px; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.18); z-index: 5; animation: cf1 4s ease-in-out infinite; display: flex; align-items: center; justify-content: center; font-size: 80px; background: linear-gradient(160deg,#c0392b,#8e44ad); }
+    @keyframes cf1 { 0%,100% { transform: rotate(-3deg) translateY(0); } 50% { transform: rotate(-3deg) translateY(-8px); } }
+    .card-secondary { position: absolute; right: 0; bottom: 20px; width: 190px; height: 300px; border-radius: 20px; overflow: hidden; box-shadow: 0 16px 48px rgba(0,0,0,0.15); z-index: 4; animation: cf2 4s ease-in-out infinite 1s; display: flex; align-items: center; justify-content: center; font-size: 64px; background: linear-gradient(160deg,#1e8449,#2980b9); }
+    @keyframes cf2 { 0%,100% { transform: rotate(4deg) translateY(0); } 50% { transform: rotate(4deg) translateY(-6px); } }
+
+    /* MOSAIC */
+    .mosaic-bg { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(8,1fr); grid-template-rows: repeat(4,1fr); gap: 8px; padding: 80px 8px 8px; opacity: 0.07; pointer-events: none; z-index: 0; }
+    .mosaic-cell { border-radius: 12px; }
+
+    /* FOOTER */
+    .bottom-strip { background: var(--light); padding: 24px 80px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .strip-text { font-size: 15px; color: var(--gray); font-weight: 500; }
+    .strip-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .strip-links a { font-size: 13px; color: var(--gray); text-decoration: none; font-weight: 500; }
+    .strip-links a:hover { text-decoration: underline; }
+
+    /* PAUSE */
+    .pause-btn { position: fixed; bottom: 28px; right: 28px; width: 48px; height: 48px; background: rgba(255,255,255,0.95); border: 2px solid #e0e0e0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--black); cursor: pointer; z-index: 300; box-shadow: 0 4px 16px rgba(0,0,0,0.1); transition: transform .2s; }
+    .pause-btn:hover { transform: scale(1.1); }
+
+    @media (max-width: 900px) {
+      .hero { flex-direction: column; align-items: center; text-align: center; }
+      .hero-left { padding: 60px 24px 20px; flex: unset; }
+      .hero-cta { justify-content: center; }
+      .hero-right { height: 380px; }
+      .pin-stack { width: 260px; height: 380px; }
+      .card-main { width: 170px; height: 300px; }
+      .card-secondary { width: 140px; height: 210px; }
+      .nav-link { display: none; }
+      .bottom-strip { padding: 20px 24px; }
+    }
+    @media (max-width: 600px) {
+      .hero-left { padding: 40px 16px 10px; }
+      .nav-search { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a class="nav-brand" href="/">
+    <div class="nav-brand-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+    </div>
+    <span class="nav-brand-text">Pinterest</span>
+  </a>
+
+  <!-- Explore → /feed (will redirect to login if not authenticated) -->
+  <a href="/feed" class="nav-explore">Explore</a>
+
+  <!-- Search → redirects to login page (user not logged in on landing) -->
+  <div class="nav-search">
+    <i class="fa fa-search"></i>
+    <input type="text" placeholder="Search for easy dinners, fashion, etc."
+           onclick="window.location.href='/login'" readonly/>
+  </div>
+
+  <div class="nav-right">
+    <!-- These link to login since visitors aren't logged in yet -->
+    <a href="/login" class="nav-link">About</a>
+    <a href="/login" class="nav-link">Businesses</a>
+    <a href="/login" class="nav-link">Create</a>
+    <a href="/login" class="nav-link">News</a>
+    <a href="/login" class="btn-login">Log in</a>
+    <a href="/register" class="btn-signup">Sign up</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="mosaic-bg" id="mosaicBg"></div>
+
+  <div class="hero-left">
+    <h1 class="hero-tagline">Find ideas for</h1>
+    <span class="hero-tagline-colored" id="typedText"></span>
+    <div class="hero-dots" id="heroDots"></div>
+    <div class="hero-cta">
+      <a href="/register" class="cta-red">Get started — it's free</a>
+      <a href="/login" class="cta-dark">Log in</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="pin-stack">
+      <div class="pin-badge">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+      </div>
+      <div class="card-main" id="mainCard">🌺</div>
+      <div class="card-secondary" id="secondCard">🌿</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="bottom-strip">
+  <span class="strip-text">© 2025 Pinterest Clone</span>
+  <div class="strip-links">
+    <a href="/login">Terms of Service</a>
+    <a href="/login">Privacy Policy</a>
+    <a href="/login">Help</a>
+    <a href="/register">Sign up</a>
+    <a href="/login">Log in</a>
+    <a href="/feed">Explore</a>
+  </div>
+</div>
+
+<!-- PAUSE BTN -->
+<button class="pause-btn" id="pauseBtn" title="Pause slideshow">
+  <i class="fa fa-pause" id="pauseIcon"></i>
+</button>
+
+<script>
+  const slides = [
+    { text: 'statement tattoos',  emoji1: '🌺', emoji2: '🌿', g1: ['#c0392b','#8e44ad'], g2: ['#1e8449','#2980b9'] },
+    { text: 'bedroom aesthetics', emoji1: '🛋️', emoji2: '✨', g1: ['#f6d365','#fda085'], g2: ['#a18cd1','#fbc2eb'] },
+    { text: 'healthy recipes',    emoji1: '🍋', emoji2: '🥗', g1: ['#43e97b','#38f9d7'], g2: ['#f7971e','#ffd200'] },
+    { text: 'travel inspiration', emoji1: '🌅', emoji2: '🏔️', g1: ['#4facfe','#00f2fe'], g2: ['#fd746c','#ff9068'] },
+    { text: 'fashion inspo',      emoji1: '👗', emoji2: '👠', g1: ['#f093fb','#f5576c'], g2: ['#667eea','#764ba2'] },
+  ];
+
+  let current = 0, paused = false, typeTimeout, slideInterval;
+  const typedEl    = document.getElementById('typedText');
+  const dotsEl     = document.getElementById('heroDots');
+  const mainCard   = document.getElementById('mainCard');
+  const secondCard = document.getElementById('secondCard');
+  const pauseBtn   = document.getElementById('pauseBtn');
+  const pauseIcon  = document.getElementById('pauseIcon');
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function updateDots(idx) {
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+
+  function typeText(text) {
+    typedEl.textContent = '';
+    let i = 0;
+    function tick() {
+      if (i <= text.length) {
+        typedEl.textContent = text.slice(0, i++);
+        typeTimeout = setTimeout(tick, 65);
+      }
+    }
+    tick();
+  }
+
+  function goTo(idx) {
+    clearTimeout(typeTimeout);
+    current = idx;
+    const s = slides[idx];
+    updateDots(idx);
+    mainCard.style.background   = `linear-gradient(160deg, ${s.g1[0]}, ${s.g1[1]})`;
+    mainCard.textContent        = s.emoji1;
+    secondCard.style.background = `linear-gradient(160deg, ${s.g2[0]}, ${s.g2[1]})`;
+    secondCard.textContent      = s.emoji2;
+    typeText(s.text);
+  }
+
+  function startInterval() {
+    slideInterval = setInterval(() => goTo((current + 1) % slides.length), 4000);
+  }
+
+  goTo(0);
+  startInterval();
+
+  pauseBtn.addEventListener('click', () => {
+    paused = !paused;
+    if (paused) { clearInterval(slideInterval); pauseIcon.className = 'fa fa-play'; }
+    else { startInterval(); pauseIcon.className = 'fa fa-pause'; }
+  });
+
+  // Mosaic background
+  const mosaicBg = document.getElementById('mosaicBg');
+  const colors = ['#FFDEE9','#B5FFFC','#f6d365','#fda085','#a1c4fd','#c2e9fb','#fd746c','#ff9068','#43e97b','#38f9d7','#f093fb','#f5576c','#4facfe','#00f2fe','#fa709a','#fee140','#a18cd1','#fbc2eb','#667eea','#764ba2','#f7971e','#ffd200','#11998e','#38ef7d','#ee0979','#ff6a00','#2193b0','#6dd5ed','#cc2b5e','#753a88','#ff9a9e','#fecfef'];
+  for (let i = 0; i < 32; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'mosaic-cell';
+    cell.style.background = colors[i % colors.length];
+    mosaicBg.appendChild(cell);
+  }
+</script>
+</body>
+</html>
