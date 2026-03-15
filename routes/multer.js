@@ -1,17 +1,19 @@
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
-const { randomUUID } = require('crypto');
-const path = require('path');
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './public/images/uploads');
-    },
-    filename: function (req, file, cb) {
-        const uniqueFilename = uuidv4();
-        cb(null, uniqueFilename+path.extname( file.originalname));
-    }
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET
 });
 
-const upload = multer({ storage: storage });
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'pinterest-clone',
+    allowed_formats: ['jpg', 'jpeg', 'png']
+  }
+});
 
-module.exports = upload;
+module.exports = multer({ storage: storage });
