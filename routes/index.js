@@ -70,9 +70,7 @@ router.get('/search', isLoggedIn, async function(req, res) {
 
     res.render('feed', { user: user, posts: userPosts, unsplashPosts: unsplashPosts, searchQuery: query });
   } catch(err) {
-    
-    console.error('Search error:', err);
-    res.redirect('/feed');
+    next(err);
   }
 });
 
