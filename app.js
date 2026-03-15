@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressSession({
   resave: false,
   saveUninitialized: false,
-  secret: 'hey hey'
+  secret: 'mysecretkey123'
 }));
 
 app.use(flash());
