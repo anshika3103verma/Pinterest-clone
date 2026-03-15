@@ -125,7 +125,7 @@ router.post('/register', async function(req, res) {
       return res.send("Username exists! <a href='/register'>Try again</a>");
     }
 
-    const hashedPassword = await bcryptjs.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     await userModel.create({
       username: username,
@@ -150,7 +150,7 @@ router.post('/login', async function(req, res) {
       return res.send("User not found! <a href='/login'>Try again</a>");
     }
 
-    const isMatch = await bcryptjs.compare(password, user.password);
+   const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.send("Wrong password! <a href='/login'>Try again</a>");
     }
