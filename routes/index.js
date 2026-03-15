@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const userModel = require("../models/users");
 const postModel = require("./posts");
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const upload = require("./multer");
 const fetch = require("node-fetch");
 
@@ -80,7 +80,7 @@ router.post('/upload',isLoggedIn, upload.single('file'), async function(req, res
   }
   const user = await userModel.findById( req.session.userId);
   const post = await postModel.create({
-    image: req.file.filename,
+    image: req.file.path,
     imageText: req.body.filecaption,
     user: user._id
   });
