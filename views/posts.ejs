@@ -33,7 +33,7 @@
           <% user.posts.forEach(function(post) { %>
              <a href="/post/<%= post._id %>" style="text-decoration:none; color:inherit;">
     <div class="card">
-      <img src="/images/uploads/<%= post.image %>" alt="Post Image" class="post-image">
+      <img src="<%= post.image %>" alt="Post Image" class="post-image">
       <p style="padding: 8px;"><%= post.imageText %></p>
             </div>
           <% }) %>
