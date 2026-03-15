@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const userModel = require("../models/users");
 const postModel = require("./posts");
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const upload = require("./multer");
 const fetch = require("node-fetch");
 
@@ -96,11 +96,23 @@ router.get('/profile', isLoggedIn, async function(req, res,next) {
 });
 
 router.post('/update-dp', isLoggedIn, upload.single('dp'), async function(req, res) {
-  const user = await userModel.findById(req.session.userId);
-  user.dp = req.file.filename;
-  await user.save();
-  res.redirect('/profile');
+  try {
+    const user = await userModel.findById(req.session.userId);
+    user.dp = req.file.path;  // Change req.file.filename to req.file.path
+    await user.save();
+    res.redirect('/profile');
+  } catch(err) {
+    console.error('Update DP error:', err);
+    res.status(500).send("Error: " + err.message);
+  }
 });
+
+// router.post('/update-dp', isLoggedIn, upload.single('dp'), async function(req, res) {
+//   const user = await userModel.findById(req.session.userId);
+//   user.dp = req.file.filename;
+//   await user.save();
+//   res.redirect('/profile');
+// });
 
 router.get('/posts', isLoggedIn, async function(req, res, next) {
   const user = await userModel.findById(req.session.userId).populate("posts");
