@@ -78,7 +78,7 @@
 
       <!-- Avatar -->
       <div class="avatar-wrapper" onclick="document.getElementById('dpInput').click()" style="cursor:pointer; position:relative; display:inline-block;">
-        <img src="<%= user.dp ? '/images/uploads/' + user.dp : 'https://i.postimg.cc/GpJd6R8x/Profile-Pic.jpg' %>"
+        <img src="<%= user.dp ? user.dp : 'https://i.postimg.cc/GpJd6R8x/Profile-Pic.jpg' %>"
              alt="Profile Picture" class="avatar">
         <div style="position:absolute; bottom:6px; right:6px; background:#e60023; color:white; border-radius:50%; width:28px; height:28px; display:flex; align-items:center; justify-content:center; font-size:14px; box-shadow:0 2px 6px rgba(0,0,0,0.3);">
           <i class="bi bi-camera-fill"></i>
@@ -113,7 +113,7 @@
           <button type="submit"><i class="bi bi-upload"></i> Upload</button>
         </form>
       </div>
-
+ 
     </div>
   </main>
 
