@@ -27,8 +27,8 @@ app.use(expressSession({
   resave: false,
   saveUninitialized: false,
   secret: process.env.SESSION_SECRET,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URI
+ store: require('connect-mongo').create({
+  mongoUrl: process.env.MONGODB_URI
   }),
     cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
