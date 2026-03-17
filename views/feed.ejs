@@ -81,15 +81,17 @@
 
         <!-- Your uploaded posts -->
         <% if (typeof posts !== 'undefined' && posts && posts.length > 0) { %>
-            <% posts.forEach(function(post) { %>
-                <div class="box">
-                    <img src="/images/uploads/<%= post.image %>" alt="<%= post.imageText %>">
-                    <div class="caption">
-                        <p><%= post.imageText %></p>
-                        <small>by <strong><%= post.user ? post.user.username : 'Unknown' %></strong></small>
-                    </div>
-                </div>
-            <% }) %>
+         <% posts.forEach(function(post) { %>
+    <% if (post.image && post.image.startsWith('http')) { %>
+        <div class="box">
+            <img src="<%= post.image %>" alt="<%= post.imageText %>">
+            <div class="caption">
+                <p><%= post.imageText %></p>
+                <small>by <strong><%= post.user ? post.user.username : 'Unknown' %></strong></small>
+            </div>
+        </div>
+    <% } %>
+<% }) %>
         <% } %>
 
         <!-- Unsplash posts -->
