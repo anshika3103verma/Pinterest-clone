@@ -4,7 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const expressSession = require("express-session");
-const MongoStore = require('connect-mongo')(session);
 const flash = require("connect-flash");
 
 var indexRouter = require('./routes/index');
@@ -21,10 +20,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(expressSession({
-  resave: false,
-  saveUninitialized: false,
+  resave: true,
+  saveUninitialized: true,
   secret: process.env.SESSION_SECRET || 'mysecretkey123',
-  store: new MongoStore({ url: process.env.MONGODB_URI }),
   cookie: {
     secure: false,
     maxAge: 1000 * 60 * 60 * 24 * 7
@@ -51,4 +49,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 module.exports = app;
