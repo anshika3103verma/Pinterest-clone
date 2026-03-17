@@ -4,7 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const expressSession = require("express-session");
-const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 
 var indexRouter = require('./routes/index');
@@ -24,11 +23,8 @@ app.use(expressSession({
   resave: false,
   saveUninitialized: false,
   secret: process.env.SESSION_SECRET || 'mysecretkey123',
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URI
-  }),
   cookie: {
-    secure: process.env.NODE_ENV === 'production',
+    secure: false,
     maxAge: 1000 * 60 * 60 * 24 * 7
   }
 }));
