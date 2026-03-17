@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const expressSession = require("express-session");
-const MongoStore = require('connect-mongo')(expressSession);
+const MongoStore = require('connect-mongo')(session);
 const flash = require("connect-flash");
 
 var indexRouter = require('./routes/index');
