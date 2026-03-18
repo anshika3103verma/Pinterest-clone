@@ -12,7 +12,7 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'pinterest-clone',
-    allowed_formats: ['jpg', 'jpeg', 'png']
+    allowed_formats: ['jpg', 'jpeg', 'png','heic', 'heif', 'webp']
   }
 });
 
